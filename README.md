@@ -6,6 +6,13 @@ This repository contains a detailed write-up for a challenge found on [BrokenAzu
 
 The company named SuperCompany B.V. has been working with IT systems for a while now and have an IT team of a whoppin' 2 people. Because the CEO of the company has heard that 'Cloud' is the new way of working, the CEO has asked the IT team to migrate all IT systems to the Azure cloud platform. Sadly, management does not allow the IT team to take courses or trainings to learn more about Azure cloud and so they have to learn as-they-go
 
+## Developer tools
+
+By refreshing the page, it is shown in the security pane, that the Azure account name is **supercompanystorage**
+```bash
+https://supercompanystorage.blob.core.windows.net
+```
+
 ## Tools Utilized
 
 - **`enumerate_containers.py`**: A script designed for enumerating accessible storage containers within a given Azure Storage account.
