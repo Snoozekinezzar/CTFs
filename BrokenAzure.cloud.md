@@ -5,15 +5,18 @@ This repository contains a detailed write-up for a challenge found on [BrokenAzu
 ## Challenge Overview
 
 The company named SuperCompany B.V. has been working with IT systems for a while now and have an IT team of a whoppin' 2 people. Because the CEO of the company has heard that 'Cloud' is the new way of working, the CEO has asked the IT team to migrate all IT systems to the Azure cloud platform. Sadly, management does not allow the IT team to take courses or trainings to learn more about Azure cloud and so they have to learn as-they-go
-
-# Challenge 1
-
-## Tools Utilized
+<br>
+## Scripts
 These scripts are found in my github folder, Tools
 ```bash
 https://github.com/Snoozekinezzar/Tools.git
 ```
 <br>
+
+# Challenge 1
+<br>
+
+## Tools Utilized
 
 **enumerate_containers.py** : A script designed for enumerating accessible storage containers within a given Azure Storage account.
 **list_blobs_info.py** : A script aimed at listing details about blobs within a specific container, including file names, sizes, and modification timestamps.
@@ -59,7 +62,12 @@ This investigative effort led to the identification of several files, one of whi
 <br>
 This flag was located within the file named SECURA{C3RT1F1C3T3}.pem, marking a successful extraction of sensitive data.
 
+<br>
+
 # Challenge 2
+<br>
+
+## Tools Utilized
 
 **blob_activator.py**: A script for reading individual blobs within a given Azure Storage account.
 
