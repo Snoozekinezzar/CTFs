@@ -59,14 +59,7 @@ This investigative effort led to the identification of several files, one of whi
 <br>
 This flag was located within the file named SECURA{C3RT1F1C3T3}.pem, marking a successful extraction of sensitive data.
 
-#Challenge 2
-
-## Tools Utilized
-These scripts are found in my github folder, Tools
-```bash
-https://github.com/Snoozekinezzar/Tools.git
-```
-<br>
+# Challenge 2
 
 **blob_activator.py**: A script for reading individual blobs within a given Azure Storage account.
 
