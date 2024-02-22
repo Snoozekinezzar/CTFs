@@ -266,7 +266,38 @@ The third flag was inside the `return new OkObjectResult`.
 # Challenge 4
 <br>
 
-##
+## Network mapper
+As I could see in the `OkObjectResult`, there is a database I possibly could access, `secureavulnerableserver.database.windows.net`.
+I therefor ran a Nmap scan to see if I could get a hit.
+<br>
+It is possible to try different ports related to databases (this is standard/non-configured ports):
+<br>
+`MySQL: 3306
+<br>
+Oracle DB: 1521, 1830
+<br>
+PostgreSQL: 5432
+<br>
+SQL Server (MSSQL): 1433, 1434`
+<br>
+
+### Output:
+```bash
+┌──┌──(brokenazure㉿ctf)
+└─$ nmap securavulnerableserver.database.windows.net -p 1433
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-02-22 08:47 UTC
+Nmap scan report for securavulnerableserver.database.windows.net (104.40.168.105)
+Host is up (0.024s latency).
+
+PORT     STATE SERVICE
+1433/tcp open  ms-sql-s
+
+Nmap done: 1 IP address (1 host up) scanned in 0.14 seconds
+```
+<br>
+As shown above, the host is up on port: `1433`, which means `SQL Server (MSSQL)`.
+<br>
+
 
 ## Conclusion
 The challenge underscored the critical need for securing Azure storage accounts and containers against unauthorized access. The successful enumeration and extraction of data from inadequately secured containers highlighted potential vulnerabilities, reinforcing the importance of ethical hacking practices and proper authorization prior to conducting vulnerability assessments.
