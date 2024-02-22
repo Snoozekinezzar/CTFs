@@ -332,5 +332,12 @@ The fourth flag was inside the table `vpn_employee_data`.
 
 **4th Flag: SECURA{VPN_CR3D3NT14L$}**
 
+<br>
+
+# Challenge 4
+<br>
+
+
+
 ## Conclusion
 The challenge underscored the critical need for securing Azure storage accounts and containers against unauthorized access. The successful enumeration and extraction of data from inadequately secured containers highlighted potential vulnerabilities, reinforcing the importance of ethical hacking practices and proper authorization prior to conducting vulnerability assessments.
