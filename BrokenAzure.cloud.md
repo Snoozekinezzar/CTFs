@@ -9,10 +9,9 @@ The company named SuperCompany B.V. has been working with IT systems for a while
 
 ## Scripts
 
-These scripts are found in my github folder, Tools
-```bash
-https://github.com/Snoozekinezzar/Tools.git
-```
+These scripts are found in my github folder, "Tools"
+> [Snoozekinezzar/Tools](https://github.com/Snoozekinezzar/Tools.git)
+> 
 
 <br>
 
@@ -467,7 +466,7 @@ Here is the website from Trevor Steen which helped me get the last flag:
 
 <br>
 
-> [BrokenAzure]([https://github.com/NetSPI/MicroBurst](https://ratil.life/broken-azure/))
+> [BrokenAzure](https://ratil.life/broken-azure/)
 
 <br>
 <br>
