@@ -9,8 +9,6 @@ The company named SuperCompany B.V. has been working with IT systems for a while
 
 ## Scripts
 
-<br>
-
 These scripts are found in my github folder, Tools
 ```bash
 https://github.com/Snoozekinezzar/Tools.git
@@ -23,8 +21,6 @@ https://github.com/Snoozekinezzar/Tools.git
 <br>
 
 ## Tools Utilized
-
-<br>
 
 **enumerate_containers.py** : A script designed for enumerating accessible storage containers within a given Azure Storage account.
 **list_blobs_info.py** : A script aimed at listing details about blobs within a specific container, including file names, sizes, and modification timestamps.
@@ -48,8 +44,6 @@ https://supercompanystorage.blob.core.windows.net
 
 ### Enumerating Storage Containers
 
-<br>
-
 The first step involved using the `enumerate_containers.py` script to enumerate storage containers within the `supercompanystorage` account, as showcased below:
 
 <br>
@@ -65,8 +59,6 @@ Found Containers: ['storagecontainer']
 <br>
 
 ### Output:
-
-<br>
 
 Upon identifying the container name (storagecontainer), the `list_blobs_info.py` script was executed to enumerate blobs within this container. This process revealed the names, sizes, and last modified dates of the blobs:
 
@@ -84,7 +76,7 @@ List of blobs:
 
 <br>
 
-## Uncovered Flags
+### Uncovered Flags
 This investigative effort led to the identification of several files, one of which contained a flag:
 
 <br>
@@ -110,7 +102,8 @@ This flag was located within the file named SECURA{C3RT1F1C3T3}.pem, marking a s
 
 <br>
 
-## Accessing blobs
+### Accessing blobs
+
 The next step involved using the `blob_activator.py` script to access the information inside the blobs I've previously listed using my `list_blobs_info.py`, as showcased below:
 
 <br>
@@ -126,8 +119,6 @@ Enter the blob name: SECURA{C3RT1F1C3T3}.pem
 <br>
 
 ### Output:
-
-<br>
 
 Using the `blob_activator.py`, I was able to access the Privacy Enhanced Mail file (.pem), *SECURA{C3RT1F1C3T3}.pem*, which contained **certificate**, **private key**, **tenant id** and **application id**.
 
@@ -189,7 +180,8 @@ App-id: b2bfb506-aead-40d8-9e93-6f3e5d752826
 
 <br>
 
-## Writing to .pem file and az ad commands
+### Writing to .pem file and az ad commands
+
 Now that I have the *certificate*, *private key* I can create my own *.pem file*.
 Together with *tenant id* and *app-id*, I can use az login to access the service principal, but without the subscription (It should be noted that tenant id and app id is usually not in .pem files)
 
@@ -202,8 +194,6 @@ az login --service-principal -u b2bfb506-aead-40d8-9e93-6f3e5d752826 --tenant 44
 <br>
 
 ### Output:
-
-<br>
 
 ```bash
 ┌──┌──(brokenazure㉿ctf)
@@ -232,8 +222,6 @@ az ad user list
 <br>
 
 ### Output:
-
-<br>
 
 ```bash
 ┌──┌──(brokenazure㉿ctf)
@@ -293,8 +281,14 @@ az ad user list
   }
 ]
 ```
+
+<br>
+
+### Uncovered Flags
+
 I found the second flag in `officeLocation` in the user `DevOps`:
 
+<br>
 <br>
 
 **2nd Flag: SECURA{D4F4ULT_P4SSW0RD}**
@@ -316,8 +310,6 @@ By this the **az functionapp function show** I can access the information inside
 ### Output:
 `Abbreviated output`
 
-<br>
-
 ```bash
 ┌──┌──(brokenazure㉿ctf)
 └─$ az functionapp function show
@@ -326,8 +318,10 @@ return new OkObjectResult("Server=tcp:secureavulnerableserver.database.windows.n
 
 <br>
 
+### Uncovered Flags
 The third flag was inside the `return new OkObjectResult`.
 
+<br>
 <br>
 
 **3rd Flag: SECURA{C0NN3CT10N_STR1NG}**
@@ -346,9 +340,7 @@ The third flag was inside the `return new OkObjectResult`.
 
 <br>
 
-## Network mapper
-
-<br>
+### Network mapper
 
 As I could see in the `OkObjectResult`, there is a database I possibly could access, `secureavulnerableserver.database.windows.net`.
 I therefor ran a Nmap scan to see if I could get a hit.
@@ -371,8 +363,6 @@ It is possible to try different ports related to databases (this is standard/non
 
 ### Output:
 
-<br>
-
 ```bash
 ┌──┌──(brokenazure㉿ctf)
 └─$ nmap securavulnerableserver.database.windows.net -p 1433
@@ -392,17 +382,13 @@ As shown above, the host is up on port: `1433`, which means `SQL Server (MSSQL)`
 
 <br>
 
-## Accessing database and tables
-
-<br>
+### Accessing database and tables
 
 By running `database_connector.py` I could access the database and the tables (I first had to install the driver for SQL Server), using the information I already gathered, together with the database name found in `return new OkObjectResult` under `Initial Catalog`.
 
 <br>
 
 ### Output:
-
-<br>
 
 ```
 ┌──┌──(brokenazure㉿ctf)
@@ -427,8 +413,10 @@ Enter SQL command: select * from vpn_employee_data
 
 <br>
 
+## Uncovered Flags
 The fourth flag was inside the table `vpn_employee_data`.
 
+<br>
 <br>
 
 **4th Flag: SECURA{VPN_CR3D3NT14L$}**
@@ -456,8 +444,6 @@ After trying Nmap to check the IPs I could see the host is not up anymore:
 
 ### Output:
 
-<br>
-
 ```bash
 ┌──┌──(brokenazure㉿ctf)
 └─$ nmap 10.1.2.4 10.1.2.5
@@ -467,8 +453,10 @@ Nmap done: 2 IP addresses (0 hosts up) scanned in 3.04 seconds
 
 <br>
 
+## Uncovered Flags
 I will then type out the result of the last flag from the website I found, to complete the challenge.
 
+<br>
 <br>
 
 **5th Flag: SECURA{1NT3RN4L_HTML_W3BP4G3}**
