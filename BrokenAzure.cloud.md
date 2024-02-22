@@ -278,13 +278,13 @@ I therefor ran a Nmap scan to see if I could get a hit.
 <br>
 It is possible to try different ports related to databases (this is standard/non-configured ports):
 <br>
-`MySQL: 3306
+`MySQL: 3306`
 <br>
-Oracle DB: 1521, 1830
+`Oracle DB: 1521, 1830`
 <br>
-PostgreSQL: 5432
+`PostgreSQL: 5432`
 <br>
-SQL Server (MSSQL): 1433, 1434`
+`SQL Server (MSSQL): 1433, 1434`
 <br>
 
 ### Output:
@@ -301,11 +301,11 @@ PORT     STATE SERVICE
 Nmap done: 1 IP address (1 host up) scanned in 0.14 seconds
 ```
 <br>
-As shown above, the host is up on port: `1433`, which means `SQL Server (MSSQL)`.
+As shown above, the host is up on port: `1433` , which means `SQL Server (MSSQL)` .
 <br>
 
 ## Accessing database and tables
-By running `database_connector.py` I could access the database and the tables (I first had to install the driver for SQL Server)
+By running `database_connector.py` I could access the database and the tables (I first had to install the driver for SQL Server), using the information I already gathered, together with the database name found in `return new OkObjectResult` under `Initial Catalog`.
 
 ### Output:
 ```
