@@ -265,6 +265,9 @@ The third flag was inside the `return new OkObjectResult`.
 
 # Challenge 4
 <br>
+## Tools Utilized
+
+**database_connector.py**: A script for accessing databases and tables (an alternative to SQLCMD).
 
 ## Network mapper
 As I could see in the `OkObjectResult`, there is a database I possibly could access, `secureavulnerableserver.database.windows.net`.
@@ -298,6 +301,36 @@ Nmap done: 1 IP address (1 host up) scanned in 0.14 seconds
 As shown above, the host is up on port: `1433`, which means `SQL Server (MSSQL)`.
 <br>
 
+## Accessing database and tables
+By running `database_connector.py` I could access the database and the tables (I first had to install the driver for SQL Server)
+
+### Output:
+```
+┌──┌──(brokenazure㉿ctf)
+└─$ ./database_connector.py
+Enter server name: securavulnerableserver.database.windows.net
+Enter database name: securavulnerabledb
+Enter username: DevOps
+Enter password: SECURA{C0NN3CT10N_STR1NG}
+Enter driver (type 'help' to list common drivers):
+Enter driver: {ODBC Driver 17 for SQL Server}
+Connected to the database. Type 'exit' to quit.
+Enter SQL command: select table_name from securavulnerabledb.information_schema.tables
+['table_name']
+('database_firewall_rules',)
+('vpn_employee_data',)
+```
+```
+Enter SQL command: select * from vpn_employee_data
+['vpn_username', 'vpn_password']
+('Employee23187', 'SECURA{VPN_CR3D3NT14L$}',)
+```
+
+The fourth flag was inside the table `vpn_employee_data`.
+
+<br>
+
+**4th Flag: SECURA{VPN_CR3D3NT14L$}**
 
 ## Conclusion
 The challenge underscored the critical need for securing Azure storage accounts and containers against unauthorized access. The successful enumeration and extraction of data from inadequately secured containers highlighted potential vulnerabilities, reinforcing the importance of ethical hacking practices and proper authorization prior to conducting vulnerability assessments.
