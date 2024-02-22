@@ -57,6 +57,8 @@ List of blobs:
 ## Uncovered Flags
 This investigative effort led to the identification of several files, one of which contained a flag:
 
+<br>
+
 **1st Flag: SECURA{C3RT1F1C3T3}**
 <br>
 <br>
@@ -233,10 +235,38 @@ az ad user list
 ```
 I found the second flag in `officeLocation` in the user `DevOps`:
 
+<br>
+
 **2nd Flag: SECURA{D4F4ULT_P4SSW0RD}**
+
 <br>
+
+# Challenge 3
 <br>
+
+## Accessing Azure FunctionApp
+By this the **az functionapp function show** I can access the information inside the functionapp.
+
+### Output:
+`Abbreviated output`
+```bash
+┌──┌──(brokenazure㉿ctf)
+└─$ az functionapp function show
+return new OkObjectResult("Server=tcp:secureavulnerableserver.database.windows.net,1433;Initial Catalog=securavulnerabledb;Persist Security Info=False;User ID=DevOps;Password=SECURA{C0NN3CT10N_STR1NG};MultipleActiveResultSets=False;Encrypt=True
+```
+
+The third flag was inside the `return new OkObjectResult`.
+
 <br>
+
+**3rd Flag: SECURA{C0NN3CT10N_STR1NG}**
+
+<br>
+
+# Challenge 4
+<br>
+
+##
 
 ## Conclusion
 The challenge underscored the critical need for securing Azure storage accounts and containers against unauthorized access. The successful enumeration and extraction of data from inadequately secured containers highlighted potential vulnerabilities, reinforcing the importance of ethical hacking practices and proper authorization prior to conducting vulnerability assessments.
