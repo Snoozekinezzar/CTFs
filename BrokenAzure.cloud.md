@@ -268,6 +268,7 @@ The third flag was inside the `return new OkObjectResult`.
 
 # Challenge 4
 <br>
+
 ## Tools Utilized
 
 **database_connector.py**: A script for accessing databases and tables (an alternative to SQLCMD).
@@ -301,7 +302,9 @@ PORT     STATE SERVICE
 Nmap done: 1 IP address (1 host up) scanned in 0.14 seconds
 ```
 <br>
-As shown above, the host is up on port: `1433` , which means `SQL Server (MSSQL)` .
+
+As shown above, the host is up on port: `1433`, which means `SQL Server (MSSQL)`.
+
 <br>
 
 ## Accessing database and tables
@@ -337,7 +340,7 @@ The fourth flag was inside the table `vpn_employee_data`.
 
 <br>
 
-# Challenge 4
+# Challenge 5
 <br>
 
 After trying a lot of different approaches with the information above, I was not able to access further information.
