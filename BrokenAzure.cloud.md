@@ -58,7 +58,7 @@ List of blobs:
 This investigative effort led to the identification of several files, one of which contained a flag:
 
 <br>
-
+<br>
 **1st Flag: SECURA{C3RT1F1C3T3}**
 <br>
 <br>
@@ -142,7 +142,8 @@ App-id: b2bfb506-aead-40d8-9e93-6f3e5d752826
 ```
 
 ## Writing to .pem file and az ad commands
-Now that I have the *certificate*, *private key*, *tenant id and *app-id*, I can use az login to access the service principal, but without the subscription (It should be noted that tenant id and app id is usually not in .pem files)
+Now that I have the *certificate*, *private key* I can create my own *.pem file*.
+Together with *tenant id* and *app-id*, I can use az login to access the service principal, but without the subscription (It should be noted that tenant id and app id is usually not in .pem files)
 
 ```bash
 az login --service-principal -u b2bfb506-aead-40d8-9e93-6f3e5d752826 --tenant 4452edfd-a89d-43aa-8b46-a314c219cc50 --password brokenazure.pem --allow-no-subscriptions
@@ -337,7 +338,39 @@ The fourth flag was inside the table `vpn_employee_data`.
 # Challenge 4
 <br>
 
+After trying a lot of different approaches with the information above, I was not able to access further information.
 
+In reading other writeups, I found a website which show the following:
+
+*Loading up the VPN profile found earlier with the password just discovered results in a successful VPN connection. With this access, I should be able to access the VMs directly. Both are Linux machines and have port 22 open. The Website machine also has port 80 open.*
+
+*10.1.2.4*
+*10.1.2.5*
+
+After trying Nmap to check the IPs I could see the host is not up anymore:
+
+### Output:
+```bash
+┌──┌──(brokenazure㉿ctf)
+└─$ nmap 10.1.2.4 10.1.2.5
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-02-22 09:58 UTC
+Nmap done: 2 IP addresses (0 hosts up) scanned in 3.04 seconds
+```
+
+I will then type out the result of the last flag from the website I found to complete the challenge.
+
+<br>
+
+**5th Flag: SECURA{1NT3RN4L_HTML_W3BP4G3}**
+
+<br>
+
+Here is the website from Trevor Steen which helped me get the last flag:
+
+> [BrokenAzure]([https://github.com/NetSPI/MicroBurst](https://ratil.life/broken-azure/))
+
+<br>
+<br>
 
 ## Conclusion
 The challenge underscored the critical need for securing Azure storage accounts and containers against unauthorized access. The successful enumeration and extraction of data from inadequately secured containers highlighted potential vulnerabilities, reinforcing the importance of ethical hacking practices and proper authorization prior to conducting vulnerability assessments.
