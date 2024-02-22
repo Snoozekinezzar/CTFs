@@ -59,7 +59,9 @@ This investigative effort led to the identification of several files, one of whi
 
 <br>
 <br>
+
 **1st Flag: SECURA{C3RT1F1C3T3}**
+
 <br>
 <br>
 This flag was located within the file named SECURA{C3RT1F1C3T3}.pem, marking a successful extraction of sensitive data.
