@@ -54,7 +54,9 @@ After downloading, the ls command confirmed the presence of the flag file, and c
 
 ### Output:
 
+```bash
 picoCTF{s4n1ty_v3r1f13d_28e8376d}
+```
 <br>
 
 ### Uncovered Flags
