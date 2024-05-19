@@ -76,9 +76,11 @@ I then use the curl command with the -I option to fetch the headers of the HTTP 
 
 ```bash
 ┌──(kali㉿kali)-[~/picoCTF]
-└─$ curl -I http://mercury.picoctf.net:47967/
+└─$ curl -X HEAD -i http://mercury.picoctf.net:28916/
+Warning: Setting custom HTTP method to HEAD with -X/--request may not work the 
+Warning: way you want. Consider using -I/--head instead.
 HTTP/1.1 200 OK
-flag: picoCTF{r3j3ct_th3_du4l1ty_cca66bd3}
+flag: picoCTF{r3j3ct_th3_du4l1ty_70bc61c4}
 Content-type: text/html; charset=UTF-8
 ```
 
@@ -90,7 +92,7 @@ The flag was cleverly hidden within the response headers of the HTTP request, sh
 <br>
 <br>
 
-**Flag: picoCTF{r3j3ct_th3_du4l1ty_cca66bd3}**
+**Flag: picoCTF{r3j3ct_th3_du4l1ty_70bc61c4}**
 
 <br>
 <br>
